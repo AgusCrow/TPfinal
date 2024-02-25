@@ -46,9 +46,11 @@ public class Main {
                 case 1:
                     acc.setMatrix(inputMatrix);
                     secondMenu(acc);
+                    break;
                 case 2:
                     acc.startRandomGeneration();
                     secondMenu(acc);
+                    break;
                 case 3:
                     System.out.println("Exiting the program...");
                     break;
@@ -68,19 +70,23 @@ public class Main {
 
         do {
             System.out.println("Game mode" + "\n");
-            System.out.println("1- Infinite  mode");
-            System.out.println("2- Limit Generation");
-            System.out.print("3- Exit" + "\n\n");
+            System.out.println("1- Normal Mode");
+            System.out.println("2- Manual Generation");
+            System.out.println("3- Infinite Mode");
+            System.out.print("4- Exit" + "\n\n");
             System.out.print("Select option: ");
             option = sc.nextInt();
 
             switch (option) {
                 case 1:
-                    InifiniteMode(acc);
+                    normalMode(acc);
+                    break;
                 case 2:
                     manualIteration(acc);
+                    break;
                 case 3:
-                    System.out.println("Progress");
+                    InfiniteMode(acc);
+                    break;
                 case 4:
                     System.out.println("Exiting the program...");
                     break;
@@ -94,22 +100,25 @@ public class Main {
 
 
 
-    public static void InifiniteMode(Matrix acc) {
+    public static void InfiniteMode(Matrix acc) {
         Scanner sc = new Scanner(System.in);
 
         int g = 1;
         boolean game = true;
         System.out.println("\nGeneration 0: \n");
         acc.printMatrix(height, width);
+        int speed2 = 3000;
 
-        while (game == true) {
+        System.out.println("\nYou chose the infinite mode it will start in a few seconds");
 
-            String respuesta = sc.nextLine();
-            if (respuesta.equals("q")) {
-
-                game = false;
+            try {
+                Thread.sleep(speed2);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
 
+        while (game == true) {
+            
             try {
                 Thread.sleep(speed);
             } catch (InterruptedException e) {
@@ -122,9 +131,6 @@ public class Main {
             acc.nextGeneration(height, width);
             acc.copyNextGenPrint(height, width);
             
-
-            
-
             g++;         
             
         }
@@ -150,6 +156,33 @@ public class Main {
                 game = false;
             } else {
                 game = true;
+            }
+
+            System.out.println("\nGeneration " + g + ": " + "\n");
+
+            acc.nextGeneration(height, width);
+            acc.copyNextGenPrint(height, width);
+
+            g++;
+
+        }
+        sc.close();
+    }
+
+    public static void normalMode(Matrix acc) {
+        Scanner sc = new Scanner(System.in);
+
+        int g = 1;
+
+        System.out.println("\nGeneration 0: \n");
+        acc.printMatrix(height, width);
+
+        while (g > 0 && g <= generations) {
+
+            try {
+                Thread.sleep(speed);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
 
             System.out.println("\nGeneration " + g + ": " + "\n");

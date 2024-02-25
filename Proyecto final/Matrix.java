@@ -3,8 +3,7 @@ public class Matrix {
     public boolean[][] matrix;
     public boolean[][] newMatrix;
 
-    public int ALIVE_CELL = 1;
-    public int DEAD_CELL = 0;
+
 
     int width;
     int height;
@@ -31,29 +30,6 @@ public class Matrix {
         }
     }
 
-    // private int neighbors_count(int i, int j) {
-    //     // Inicio de la contabilizacion de vecinos
-    //     int n_neighbors = 0;
-
-    //     for (int neighborI = i - 1; neighborI <= i + 1; neighborI++) {
-    //         for (int neighborJ = j - 1; neighborJ <= j + 1; neighborJ++) {
-    //             neighborI = (neighborI + i + width);
-    //             neighborJ = (neighborJ + j + height);
-    //             if (neighborI == i && neighborJ == j) {
-    //                 continue;
-    //             }
-    //             if (neighborI >= 0 && neighborI < height && neighborJ >= 0 & neighborJ < width) {
-    //                 if (matrix[neighborI][neighborJ]) {
-    //                     n_neighbors++;
-    //                 }
-    //             }
-    //         }
-    //     }
-    //     if (matrix[i][j]) {
-    //         n_neighbors--;
-    //     }
-    //     return n_neighbors;
-    // }
 
     private int neighbors_count(int i, int j) {
         int neigbors_n = 0;
@@ -85,8 +61,7 @@ public class Matrix {
     // CALCULANDO LA PROXIMA GENERACION
     private boolean calculateNextGeneration(int i, int j) {
         int n_neighbors = neighbors_count(i, j);
-        boolean nextState = false; // Initialize next state as false
-            
+        boolean nextState = false;
         if (matrix[i][j]) {
             nextState = n_neighbors == 2 || n_neighbors == 3;
         } else {
@@ -94,13 +69,6 @@ public class Matrix {
         }
         return nextState;
     }
-        // if (matrix[i][j]) {
-        //     return n_neighbors == 2 || n_neighbors == 3;
-        // } else {
-        //     return n_neighbors == 3;
-        // }
-
-    // }
 
     void nextGeneration(int height, int width) {
         newMatrix = new boolean[width][height];
@@ -115,7 +83,9 @@ public class Matrix {
     }
 
     public void copyNextGenPrint(int height, int width) {
+
         // // Copiar el estado de la siguiente generación al tablero actual
+
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 matrix[i][j] = newMatrix[i][j];
@@ -129,17 +99,17 @@ public class Matrix {
     public void setMatrix(int[][] inputMatrix) {
         if (inputMatrix.length != height || inputMatrix[0].length != width) {
             throw new IllegalArgumentException(
-                    "Las imensiones de la matriz de entrada no coinciden con las imensiones de la matriz original.");
+                    "The dimensions of the input matrix do not match the dimensions of the original matrix.");
         }
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                if (inputMatrix[i][j] == ALIVE_CELL) {
+                if (inputMatrix[i][j] == 1) {
                     matrix[i][j] = true;
-                } else if (inputMatrix[i][j] == DEAD_CELL) {
+                } else if (inputMatrix[i][j] == 0) {
                     matrix[i][j] = false;
                 } else {
                     throw new IllegalArgumentException(
-                            "Entrada no válida: " + inputMatrix[i][j] + ". Se espera '1' o '0'.");
+                            "Unvalid entry:" + inputMatrix[i][j] + "Expected '1' o '0'.");
                 }
             }
         }
